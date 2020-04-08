@@ -1,5 +1,6 @@
 const { Player } = require('../models/player')
 const { roundHandler } = require('./roundHandler')
+const { sendUpdatedPlayers } = require('./utils')
 
 const actionHandler = async ({partyId, playerId, targetId, action}) => {
     
@@ -122,7 +123,8 @@ const actionHandler = async ({partyId, playerId, targetId, action}) => {
                 break;
         }
         // Aqui actualizar estado
-
+        // cada vez que alguien realiza una accion, actualizar todos los jugadores
+        await sendUpdatedPlayers(partyId)
         // Aqui afuera procesar eventos
         await roundHandler(partyId)
     }

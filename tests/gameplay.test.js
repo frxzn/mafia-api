@@ -1,5 +1,5 @@
 const request = require('supertest')
-const http = require('../src/http')
+const { http } = require('../src/http')
 const { Party } = require('../src/models/party')
 const { Player } = require('../src/models/player')
 const { setupPlayPartyDb } = require('./database/setup')

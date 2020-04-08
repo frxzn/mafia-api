@@ -1,5 +1,5 @@
 const request = require('supertest')
-const http = require('../src/http')
+const { http } = require('../src/http')
 
 test('Should test server connection', async () => {
     const res = await request(http)

@@ -1,5 +1,4 @@
 const { Party } = require('../models/party')
-const { toggleParty } = require('../functions/utils')
 
 const join = async (req, res, next) => {
     try {
@@ -22,15 +21,6 @@ const join = async (req, res, next) => {
         const cleanRole = role.toObject()
         delete cleanRole._id
         req.role = cleanRole
-        await Party.findByIdAndUpdate(req.params.partyId,
-            {
-                $push: {usersId: req.user._id}
-            }
-        )
-        if (doc.roles.length === 1) {
-            toggleParty(req.params.partyId, 'playing')
-            // update state
-        }
         next()
     } catch (e) {
         res.status(401).send({error: e.message})

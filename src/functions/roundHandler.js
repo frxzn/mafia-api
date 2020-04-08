@@ -1,7 +1,7 @@
 const { Party } = require('../models/party')
 const { Player } = require('../models/player')
 const { roundLogic } = require('./roundLogic')
-const { globalAnnouncement, toggleParty } = require('./utils')
+const { globalAnnouncement, sendUpdatedPlayers, updateParty } = require('./utils')
 
 
 const roundHandler = async (partyId) => {
@@ -12,9 +12,9 @@ const roundHandler = async (partyId) => {
 
     // all alive players are ready to continue:
     if (players.length === alive) {
-        // ------------------Aqui poner en pausa la partida y enviar un evento para actualizar el estado despues de hacerlo---------------
-        await Party.findByIdAndUpdate(partyId, {changingRound: true})
-        // ------------------------------------------------------------------
+        // Update Sockets
+        await updateParty(partyId, {changingRound: true})
+
         let lynchedPlayerId = null
         if (party.instance === 'day') {
             // lynch ?
@@ -33,25 +33,27 @@ const roundHandler = async (partyId) => {
         const updatedParty = await Party.findById(partyId)
 
         if (updatedParty.liveCivilians === 0) {
-            // ------------update state -------------------
-            toggleParty(partyId, 'finished')
-            await Party.findByIdAndUpdate(partyId, {won: 'mafias'})
-            return globalAnnouncement(partyId, 'Todos los civiles fueron eliminados. Ganaron los Mafias!')
+            // Update Sockets
+            await globalAnnouncement(partyId, 'Todos los civiles fueron eliminados. Ganaron los Mafias!')
+            await sendUpdatedPlayers(partyId)
+            return await updateParty(partyId, {won: 'mafias', status: 'finished'})
+            
         }
         if (updatedParty.liveMafias === 0) {
-            // ------------update state -------------------
-            toggleParty(partyId, 'finished')
-            await Party.findByIdAndUpdate(partyId, {won: 'civilians'})
-            return globalAnnouncement(partyId, 'Todos los mafias fueron eliminados. Ganaron los Civiles!')
+            // Update Sockets
+            await globalAnnouncement(partyId, 'Todos los mafias fueron eliminados. Ganaron los Civiles!')
+            await sendUpdatedPlayers(partyId)
+            return await updateParty(partyId, {won: 'civilians', status: 'finished'})
+            
         }
         
         const newInstance = updatedParty.instance === 'night' ? 'day' : 'night'
         const newInstanceDisplay = updatedParty.instance === 'night' ? 'Dia' : 'Noche'
 
-        // Announce new instance
-        globalAnnouncement(partyId, `Se hizo de ${newInstanceDisplay}`)
-        // Update new instance        // finish changing round
-        await Party.findByIdAndUpdate(partyId, {changingRound: false, instance: newInstance})
+        // Update Sockets
+        await globalAnnouncement(partyId, `Se hizo de ${newInstanceDisplay}`)
+        await sendUpdatedPlayers(partyId)
+        await updateParty(partyId, {changingRound: false, instance: newInstance})
     }
 }
 

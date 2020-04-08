@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express()
-const http = require('http').createServer(app);
-const io = require('socket.io')(http);
+const http = require('http').createServer(app)
+const io = require('socket.io')(http)
 const usersRouter = require('./routes/users')
 const partiesRouter = require('./routes/parties')
 const playersRouter = require('./routes/players')
@@ -23,9 +23,15 @@ app.use('/api/players', playersRouter)
 app.use('/api/events', eventsRouter)
 app.use('/api/roles', rolesRouter)
 
-
 io.on('connection', (socket) => {
-  console.log('a user connected');
-});
+  console.log('a user connected', socket.id);
+  socket.on('join', (partyId) => {
+    console.log('Player JOINED party ROOM')
+    socket.join(partyId)
+  })
+})
 
-module.exports = http
+module.exports = {
+  http,
+  io
+}

@@ -22,12 +22,27 @@ const killPlayer = async (playerId, partyId, sided) => {
     }
 }
 
-const toggleParty = async (partyId, status) => {
-    await Party.findByIdAndUpdate(partyId, {status})
+const updateParty = async (partyId, update) => {
+    await Party.findByIdAndUpdate(partyId, update, {new: true}, (err, res) => {
+        if (err) {
+            console.log(err)
+        }
+        require('../http').io.to(partyId).emit('updateParty', res)
+    })
+}
+
+const sendUpdatedPlayers = async (partyId) => {
+    await Player.find({partyId}, (err, res) => {
+        if (err) {
+            console.log(err)
+        }
+        require('../http').io.to(partyId).emit('updatePlayers', res)
+    })
 }
 
 module.exports = {
     globalAnnouncement,
     killPlayer,
-    toggleParty
+    updateParty,
+    sendUpdatedPlayers
 }

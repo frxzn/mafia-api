@@ -1,5 +1,5 @@
 const request = require('supertest')
-const http = require('../src/http')
+const { http } = require('../src/http')
 const { setupInitPartyDb } = require('./database/setup')
 const { initPartyId } = require('./database/parties')
 const { Party } = require('../src/models/party')
