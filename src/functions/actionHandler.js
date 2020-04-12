@@ -7,7 +7,7 @@ const actionHandler = async ({partyId, playerId, targetId, action}) => {
     const player = await Player.findById(playerId)
     const target = await Player.findById(targetId)
 
-    if (!player.isDone) {
+    if (!player.isDone && !player[action]) {
         switch (action) {
 
             case 'investigate':

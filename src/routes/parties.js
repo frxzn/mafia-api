@@ -13,4 +13,23 @@ router.post('/', auth, async (req, res) => {
     }
 })
 
+router.get('/', async (req, res) => {
+    try {
+        const parties = await Party.find({status: 'waiting'})
+        res.status(200).send({ parties })
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
+
+router.get('/:partyId', async (req, res) => {
+    try {
+        const party = await Party.findById(req.params.partyId)
+        res.send(party)
+    } catch (e) {
+        console.log(e)
+        res.status(400).send(e)
+    }
+})
+
 module.exports = router

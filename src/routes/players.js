@@ -37,4 +37,26 @@ router.post('/:partyId', auth, join, async (req, res) => {
     }
 })
 
+// Get current user's player, with a party Id
+router.get('/:partyId', auth, async (req, res) => {
+    try {
+        const player = await Player.findOne({userId: req.user._id, partyId: req.params.partyId})
+        res.send(player)
+    } catch (e) {
+        console.log(e)
+        res.status(400).send(e)
+    }
+})
+
+// Get all players inside a specific party
+router.get('/all/:partyId', auth, async (req, res) => {
+    try {
+        const players = await Player.find({partyId: req.params.partyId})
+        res.send(players)
+    } catch (e) {
+        console.log(e)
+        res.status(400).send(e)
+    }
+})
+
 module.exports = router

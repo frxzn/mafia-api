@@ -1,7 +1,7 @@
 const { Player } = require('../models/player')
 
 const reinitializeDayRole = async (playerId) => {
-    await Player.findByIdAndUpdate(playerId, {$set: {'skills.vote': true, isDone: false, numberOfVotes: 0}})
+    await Player.findByIdAndUpdate(playerId, {$set: {'skills.vote': false, isDone: false, numberOfVotes: 0}})
 }
 
 const reinitializeNightRole = async (playerId, role, wasHealed) => {

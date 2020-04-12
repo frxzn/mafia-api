@@ -2,6 +2,7 @@ const express = require('express');
 const app = express()
 const http = require('http').createServer(app)
 const io = require('socket.io')(http)
+const cookieParser = require('cookie-parser')
 const usersRouter = require('./routes/users')
 const partiesRouter = require('./routes/parties')
 const playersRouter = require('./routes/players')
@@ -17,6 +18,7 @@ app.get('/api/ping', (req, res) => {
 
 // Middlewares:
 app.use(express.json())
+app.use(cookieParser())
 app.use('/api/users', usersRouter)
 app.use('/api/parties', partiesRouter)
 app.use('/api/players', playersRouter)
@@ -26,8 +28,12 @@ app.use('/api/roles', rolesRouter)
 io.on('connection', (socket) => {
   console.log('a user connected', socket.id);
   socket.on('join', (partyId) => {
-    console.log('Player JOINED party ROOM')
+    console.log('Joining room ' + partyId)
     socket.join(partyId)
+    socket.on('err', (id) => {
+      console.log('Leaving room ' + id)
+      socket.leave(id)
+    })
   })
 })
 
