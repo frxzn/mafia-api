@@ -1,6 +1,12 @@
 const mongoose = require('mongoose')
 const { Role, roleSchema } = require('./role')
 
+const messageSchema = new mongoose.Schema({
+    senderName: String,
+    message: String,
+    timestamp: Date
+})
+
 const partySchema = new mongoose.Schema({
     roomTitle: {
         type: String,
@@ -42,7 +48,8 @@ const partySchema = new mongoose.Schema({
     roles: [roleSchema],
     usersId: [mongoose.Schema.Types.ObjectId],
     playersId: [mongoose.Schema.Types.ObjectId],
-    won: String
+    won: String,
+    chat: [messageSchema]
 })
 
 partySchema.pre('save', async function() {

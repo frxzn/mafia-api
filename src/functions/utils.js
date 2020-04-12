@@ -27,7 +27,9 @@ const updateParty = async (partyId, update) => {
         if (err) {
             console.log(err)
         }
-        require('../http').io.to(partyId).emit('updateParty', res)
+        const { _doc } = res
+        const { chat, ...rest } = _doc
+        require('../http').io.to(partyId).emit('updateParty', rest)
     })
 }
 

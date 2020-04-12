@@ -8,6 +8,7 @@ const partiesRouter = require('./routes/parties')
 const playersRouter = require('./routes/players')
 const eventsRouter = require('./routes/events')
 const rolesRouter = require('./routes/roles')
+const { Party } = require('./models/party')
 
 require('./db/mongoose')
 
@@ -30,6 +31,14 @@ io.on('connection', (socket) => {
   socket.on('join', (partyId) => {
     console.log('Joining room ' + partyId)
     socket.join(partyId)
+    // Handle chat messages:
+    socket.on('message', (messageObject) => {
+      io.to(partyId).emit('message', messageObject)
+      // Save message to party/messages arr
+      Party.findByIdAndUpdate(partyId, {
+        $push: {chat: {...messageObject}}
+      })
+    })
     socket.on('err', (id) => {
       console.log('Leaving room ' + id)
       socket.leave(id)
