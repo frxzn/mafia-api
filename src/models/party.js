@@ -33,10 +33,6 @@ const partySchema = new mongoose.Schema({
         type: String,
         default: "night",
     },
-    changingRound: {
-        type: Boolean,
-        default: false
-    },
     availableRoles: {
         type: [String],
         required: true

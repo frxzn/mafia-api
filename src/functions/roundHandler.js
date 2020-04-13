@@ -13,7 +13,7 @@ const roundHandler = async (partyId) => {
     // all alive players are ready to continue:
     if (players.length === alive) {
         // Update Sockets
-        await updateParty(partyId, {changingRound: true})
+        await updateParty(partyId, {status: 'waiting'})
 
         let lynchedPlayerId = null
         if (party.instance === 'day') {
@@ -53,7 +53,7 @@ const roundHandler = async (partyId) => {
         // Update Sockets
         await globalAnnouncement(partyId, `Se hizo de ${newInstanceDisplay}`)
         await sendUpdatedPlayers(partyId)
-        await updateParty(partyId, {changingRound: false, instance: newInstance})
+        await updateParty(partyId, {status: 'playing', instance: newInstance})
     }
 }
 
