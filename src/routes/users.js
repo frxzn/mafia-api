@@ -4,6 +4,11 @@ const auth = require('../middleware/auth')
 
 const router = express.Router()
 
+//Check if User is authenticated
+router.get('/me', auth, (req, res) => {
+    res.send(req.user)
+})
+
 router.post('/', async (req, res) => {
     try {
         const user = await User.create(req.body)

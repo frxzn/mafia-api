@@ -36,7 +36,7 @@ io.on('connection', (socket) => {
       io.to(partyId).emit('message', messageObject)
       // Save message to party/messages arr
       Party.findByIdAndUpdate(partyId, {
-        $addToSet: {chat: {...messageObject}}
+        $addToSet: {chat: messageObject}
       }, (err, res) => {
         if (err) {
           console.log(err)

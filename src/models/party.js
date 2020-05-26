@@ -33,6 +33,10 @@ const partySchema = new mongoose.Schema({
         type: String,
         default: "night",
     },
+    changingRound: {
+        type: Boolean,
+        default: false
+    },
     availableRoles: {
         type: [String],
         required: true
@@ -45,7 +49,11 @@ const partySchema = new mongoose.Schema({
     usersId: [mongoose.Schema.Types.ObjectId],
     playersId: [mongoose.Schema.Types.ObjectId],
     won: String,
-    chat: [messageSchema]
+    chat: [messageSchema],
+    round: {
+        type: Number,
+        default: 1
+    }
 })
 
 partySchema.pre('save', async function() {
