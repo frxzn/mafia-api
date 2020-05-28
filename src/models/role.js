@@ -1,5 +1,10 @@
 const mongoose = require('mongoose')
 
+const logSchema = new mongoose.Schema({
+    global: Boolean,
+    event: String,
+})
+
 const roleSchemaProps = {
     role: String,
     skills: {
@@ -10,7 +15,7 @@ const roleSchemaProps = {
         day: [String],
         night: [String]
     },
-    log: [String],
+    log: [logSchema],
     description: String,
     display: String,
     sided: String

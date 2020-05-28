@@ -27,6 +27,7 @@ router.post('/:partyId', auth, join, async (req, res) => {
                 }
                 if (res.playersId.length == res.numberOfPlayers) {
                     await updateParty(req.params.partyId, {status: 'playing'})
+                    //set first timeout...
                 }
             }
         )

@@ -1,6 +1,6 @@
 const { Player } = require('../models/player')
 const { roundHandler } = require('./roundHandler')
-const { sendUpdatedPlayers } = require('./utils')
+const { sendUpdatedPlayers, privateLog } = require('./utils')
 
 const actionHandler = async ({partyId, playerId, targetId, action}) => {
     
@@ -13,7 +13,7 @@ const actionHandler = async ({partyId, playerId, targetId, action}) => {
             case 'investigate':
                 await Player.findByIdAndUpdate(playerId,{
                     $set: {'skills.investigate': true, isDone: true},
-                    $push: {log: `${target.playerName} esta aliado con los ${target.sided}.`}
+                    $push: {log: privateLog(`${target.playerName} esta aliado con los ${target.sided}.`)}
                 })
                 break;
 
@@ -24,7 +24,7 @@ const actionHandler = async ({partyId, playerId, targetId, action}) => {
 
                 await Player.findByIdAndUpdate(playerId,{
                     $set: {'skills.heal': true, isDone: true},
-                    $push: {log: `Has curado a ${target.playerName}.`}
+                    $push: {log: privateLog(`Has curado a ${target.playerName}.`)}
                 })
                 break;
 
@@ -43,7 +43,7 @@ const actionHandler = async ({partyId, playerId, targetId, action}) => {
 
                 await Player.findByIdAndUpdate(playerId,{
                     $set: {'skills.shoot': true, isDone},
-                    $push: {log: `Le has disparado a ${target.playerName}.`}
+                    $push: {log: privateLog(`Le has disparado a ${target.playerName}.`)}
                 })
                 break;
 
@@ -54,7 +54,7 @@ const actionHandler = async ({partyId, playerId, targetId, action}) => {
 
                 await Player.findByIdAndUpdate(playerId,{
                     $set: {'skills.cutTongue': true, isDone: player.skills.get('cutArm')},
-                    $push: {log: `Le has cortado la lengua a ${target.playerName}.`}
+                    $push: {log: privateLog(`Le has cortado la lengua a ${target.playerName}.`)}
                 })
                 break;
 
@@ -65,7 +65,7 @@ const actionHandler = async ({partyId, playerId, targetId, action}) => {
 
                 await Player.findByIdAndUpdate(playerId,{
                     $set: {'skills.cutArm': true, isDone: player.skills.get('cutTongue')},
-                    $push: {log: `Le has cortado la mano a ${target.playerName}.`}
+                    $push: {log: privateLog(`Le has cortado la mano a ${target.playerName}.`)}
                 })
                 break;
 
@@ -74,12 +74,12 @@ const actionHandler = async ({partyId, playerId, targetId, action}) => {
                 const frase = beggingFrases[Math.floor(Math.random() * beggingFrases.length)];
     
                 await Player.findByIdAndUpdate(targetId,{
-                    $push: {log: `El mendigo dice: ${frase}`}
+                    $push: {log: privateLog(`El mendigo dice: ${frase}`)}
                 })
 
                 await Player.findByIdAndUpdate(playerId,{
                     $set: {'skills.beg': true, isDone: true},
-                    $push: {log: `Le has mendigado a ${target.playerName}.`}
+                    $push: {log: privateLog(`Le has mendigado a ${target.playerName}.`)}
                 })
                 break;
 
@@ -90,14 +90,14 @@ const actionHandler = async ({partyId, playerId, targetId, action}) => {
 
                 await Player.findByIdAndUpdate(playerId,{
                     $set: {'skills.specialShot': true, isDone: player.skills.get('shoot')},
-                    $push: {log: `Le has disparado a ${target.playerName}.`}
+                    $push: {log: privateLog(`Le has disparado a ${target.playerName}.`)}
                 })
                 break;
 
             case 'steal':
                 await Player.findByIdAndUpdate(playerId,{
                     $set: {'skills.steal': true, isDone: player.skills.get('shoot')},
-                    $push: {log: `El rol de ${target.playerName} es ${target.display}.`}
+                    $push: {log: privateLog(`El rol de ${target.playerName} es ${target.display}.`)}
                 })
                 break;
 
@@ -108,14 +108,14 @@ const actionHandler = async ({partyId, playerId, targetId, action}) => {
 
                 await Player.findByIdAndUpdate(playerId,{
                     $set: {'skills.vote': true, isDone: true},
-                    $push: {log: `Has votado a ${target.playerName}.`}
+                    $push: {log: privateLog(`Has votado a ${target.playerName}.`)}
                 })
                 break;
 
             case 'ready':
                 await Player.findByIdAndUpdate(playerId,{
                     $set: {isDone: true},
-                    $push: {log: 'Te fuiste a dormir...'}
+                    $push: {log: privateLog('Te fuiste a dormir...')}
                 })
                 break;
 

@@ -30,7 +30,7 @@ router.post('/', auth, async (req, res) => {
         })
 
         const party = await Party.create({...req.body, liveCivilians, liveMafias, numberOfPlayers ,createdBy: req.user._id})
-        res.status(201).send({ party })
+        res.status(201).send(party)
     } catch (e) {
         res.status(400).send(e)
     }
@@ -39,7 +39,7 @@ router.post('/', auth, async (req, res) => {
 router.get('/',auth, async (req, res) => {
     try {
         const parties = await Party.find({ $and: [ {status: 'waiting'}, {$nor: [{usersId: req.user._id}]} ] })
-        res.status(200).send({ parties })
+        res.status(200).send(parties)
     } catch (e) {
         res.status(400).send(e)
     }

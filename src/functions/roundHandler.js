@@ -54,6 +54,12 @@ const roundHandler = async (partyId) => {
         await globalAnnouncement(partyId, `Se hizo de ${newInstanceDisplay}`)
         await sendUpdatedPlayers(partyId)
         await updateParty(partyId, {$set: {changingRound: false, instance: newInstance}, $inc: {round: 1}})
+        
+        // Set timeout
+        // call function that queries current round => if round === prev round
+        // loop through all players to done
+        // send updated players
+
     }
 }
 

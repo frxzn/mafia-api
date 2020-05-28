@@ -1,9 +1,23 @@
 const { Player } = require('../models/player')
 const { Party } = require('../models/party')
 
+const privateLog = (event) => {
+    return {
+        global: false,
+        event
+    }
+}
+
+const publicLog = (event) => {
+    return {
+        global: true,
+        event
+    }
+}
+
 const globalAnnouncement = async (partyId, message) => {
     await Player.updateMany({partyId}, {
-        $push: {log: message}
+        $push: {log: publicLog(message)}
     })
 }
 
@@ -46,5 +60,7 @@ module.exports = {
     globalAnnouncement,
     killPlayer,
     updateParty,
-    sendUpdatedPlayers
+    sendUpdatedPlayers,
+    privateLog,
+    publicLog
 }
