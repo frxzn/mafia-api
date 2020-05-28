@@ -2,7 +2,7 @@ const { Party } = require('../models/party')
 const { Player } = require('../models/player')
 const { roundLogic } = require('./roundLogic')
 const { globalAnnouncement, sendUpdatedPlayers, updateParty } = require('./utils')
-
+const timeout = require('./timeout')
 
 const roundHandler = async (partyId) => {
 
@@ -53,13 +53,18 @@ const roundHandler = async (partyId) => {
         // Update Sockets
         await globalAnnouncement(partyId, `Se hizo de ${newInstanceDisplay}`)
         await sendUpdatedPlayers(partyId)
-        await updateParty(partyId, {$set: {changingRound: false, instance: newInstance}, $inc: {round: 1}})
-        
-        // Set timeout
-        // call function that queries current round => if round === prev round
-        // loop through all players to done
-        // send updated players
+        const roundDurationMS = updatedParty.roundDuration * 60 * 1000 // roundDuration: minutes to miliseconds
+        await updateParty(partyId,
+            {$set: {
+                changingRound: false,
+                instance: newInstance,
+                endRoundDate: Date.now() + roundDurationMS
+            },
+            $inc: {round: 1}})
 
+        const prevRound = updatedParty.round + 2
+        console.log('SECOND', prevRound)
+        timeout.startTimeout(partyId, prevRound, roundDurationMS)
     }
 }
 

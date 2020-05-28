@@ -4,6 +4,7 @@ const { Party } = require('../models/party')
 const auth = require('../middleware/auth')
 const join = require('../middleware/join')
 const { sendUpdatedPlayers, updateParty } = require('../functions/utils')
+const timeout = require('../functions/timeout')
 
 const router = express.Router()
 
@@ -16,7 +17,7 @@ router.post('/:partyId', auth, join, async (req, res) => {
             partyId: req.params.partyId
         })
         await sendUpdatedPlayers(req.params.partyId)
-        await Party.findByIdAndUpdate(req.params.partyId,
+        const party = await Party.findByIdAndUpdate(req.params.partyId,
             {
                 $addToSet: {playersId: player._id, usersId: req.user._id}
                 
@@ -26,8 +27,16 @@ router.post('/:partyId', auth, join, async (req, res) => {
                     console.log(err)
                 }
                 if (res.playersId.length == res.numberOfPlayers) {
-                    await updateParty(req.params.partyId, {status: 'playing'})
+                    const roundDurationMS = res.roundDuration * 60 * 1000 // roundDuration: minutes to miliseconds
+                    await updateParty(req.params.partyId, {
+                        status: 'playing',
+                        endRoundDate: Date.now() + roundDurationMS
+                    })
                     //set first timeout...
+                    const partyId = req.params.partyId
+                    const prevRound = res.round
+                    console.log('FIRST', prevRound)
+                    timeout.startTimeout(partyId, prevRound, roundDurationMS)
                 }
             }
         )

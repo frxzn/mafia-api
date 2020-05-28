@@ -53,7 +53,15 @@ const partySchema = new mongoose.Schema({
     round: {
         type: Number,
         default: 1
-    }
+    },
+    roundDuration: {
+        type: Number,
+        default: null
+    },
+    endRoundDate: {
+        type: Number,
+        default: null
+    },
 })
 
 partySchema.pre('save', async function() {
