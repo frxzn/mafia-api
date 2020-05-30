@@ -105,7 +105,8 @@ const actionHandler = async ({partyId, playerId, targetId, action}) => {
                 await Player.findByIdAndUpdate(targetId,{
                     $inc: { numberOfVotes: 1 }
                 })
-
+                // isDone is hard-coded to true, since during daytime 'vote' is the only skill all players have
+                // hence they'll be done. If new day skills are added, would need to check first.
                 await Player.findByIdAndUpdate(playerId,{
                     $set: {'skills.vote': true, isDone: true},
                     $push: {log: privateLog(`Has votado a ${target.playerName}.`)}

@@ -62,5 +62,4 @@ module.exports = {
     updateParty,
     sendUpdatedPlayers,
     privateLog,
-    publicLog,
 }
