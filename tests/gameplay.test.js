@@ -24,7 +24,7 @@ test('Should simulate complete game', async () => {
     let updatedPlayerOne = await Player.findById(playerOne._id)
     expect(updatedPlayerOne.isDone).toBe(true)
     expect(updatedPlayerOne.skills.get('investigate')).toBe(true)
-    expect(updatedPlayerOne.log[3].includes('mafia')).toBe(true)
+    expect(updatedPlayerOne.log[3]['event'].includes('mafia')).toBe(true)
 
     // Medic heals himself
     await request(http)

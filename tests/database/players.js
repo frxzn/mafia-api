@@ -49,8 +49,8 @@ const playerThree = {
     wasInvestigated: false,
     wasShot: false,
     wasTongueCutOff: false,
-    playerName: userTwo.name,
-    userId: userTwo._id,
+    playerName: userThree.name,
+    userId: userThree._id,
     partyId: playParty._id
 }
 

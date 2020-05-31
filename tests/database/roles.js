@@ -11,9 +11,9 @@ const cop = {
     description: 'Aliado con los Civiles. Puedes investigar un jugador todas las noches y averiguar su bando!',
     display: 'Policia',
     log: [
-        'Tu rol es Policia.',
-        'La partida ha comenzado.',
-        'Es de noche.'
+        {global: false, event: 'Tu rol es Policia.'},
+        {global: false, event: 'La partida ha comenzado.'},
+        {global: false, event: 'Es de noche.'}
     ],
     sided: 'civilians'
 }
@@ -31,9 +31,9 @@ const medic = {
     description: 'Aliado con los Civiles. Puedes curar un jugador todas las noches, el cual no se vera afectado por el disparo de los mafias, ni las habilidades del carnicero.',
     display: 'Medico',
     log: [
-        'Tu rol es Medico.',
-        'La partida ha comenzado.',
-        'Es de noche.'
+        {global: false, event: 'Tu rol es Medico.'},
+        {global: false, event: 'La partida ha comenzado.'},
+        {global: false, event: 'Es de noche.'}
     ],
     sided: 'civilians'
 }
@@ -51,9 +51,9 @@ const leaderMafia = {
     description: 'Aliado con los Mafias. Puedes dispararle a un jugador todas las noches.',
     display: 'Mafia Lider',
     log: [
-        'Tu rol es Mafia Lider.',
-        'La partida ha comenzado.',
-        'Es de noche.'
+        {global: false, event: 'Tu rol es Mafia Lider.'},
+        {global: false, event: 'La partida ha comenzado.'},
+        {global: false, event: 'Es de noche.'}
     ],
     sided: 'mafia'
 }
