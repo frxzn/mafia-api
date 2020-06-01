@@ -63,7 +63,6 @@ const roundHandler = async (partyId) => {
             $inc: {round: 1}})
 
         const prevRound = updatedParty.round + 2
-        console.log('SECOND', prevRound)
         timeout.startTimeout(partyId, prevRound, roundDurationMS)
     }
 }

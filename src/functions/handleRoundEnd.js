@@ -7,9 +7,7 @@ const handleRoundEnd = async (partyId, prevRound) => {
     const currentRound = party.round
 
     // If we are on the same round
-    console.log('inside handler', prevRound, currentRound)
-    
-    if (prevRound === currentRound) {
+    if (prevRound === currentRound && party.instance === 'playing') {
         // Find All players that are not ready
         await Player.find({partyId, isDone: false}, async (err, res) => {
             if (err) {
