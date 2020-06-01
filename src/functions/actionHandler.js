@@ -1,7 +1,7 @@
 const { Player } = require('../models/player')
 const { Party } = require('../models/party')
 const { roundHandler } = require('./roundHandler')
-const { sendUpdatedPlayers, updateParty, privateLog } = require('./utils')
+const { sendUpdatedPlayers, updateParty, privateLog, globalAnnouncement } = require('./utils')
 
 const actionHandler = async ({partyId, playerId, targetId, action}) => {
     
@@ -75,7 +75,7 @@ const actionHandler = async ({partyId, playerId, targetId, action}) => {
                 })
                 break;
 
-            case 'beg': // Testear de aqui hacia abajo
+            case 'beg':
                 const beggingFrases = ['Unas moneditas pa la torre del reloj, loco ?', 'Un peso pal bondi?', 'Unos pesitos pal vino ?']
                 const frase = beggingFrases[Math.floor(Math.random() * beggingFrases.length)];
     
@@ -117,6 +117,8 @@ const actionHandler = async ({partyId, playerId, targetId, action}) => {
                     $set: {'skills.vote': true, isDone: true},
                     $push: {log: privateLog(`Has votado a ${target.playerName}.`)}
                 })
+
+                await globalAnnouncement(partyId, `${player.playerName} ha votado a ${target.playerName}`)
                 break;
 
             case 'ready':

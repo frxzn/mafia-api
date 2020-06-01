@@ -8,10 +8,10 @@ const roundHandler = async (partyId) => {
 
     const party = await Party.findById(partyId)
     const players = await Player.find({partyId, alive: true, isDone: true})
-    const alive = party.liveCivilians + party.liveMafias
+    const alivePlayers = party.liveCivilians + party.liveMafias
 
     // all alive players are ready to continue:
-    if (players.length === alive) {
+    if (players.length === alivePlayers) {
         // Update Sockets
         await updateParty(partyId, {changingRound: true})
 

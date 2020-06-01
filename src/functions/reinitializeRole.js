@@ -20,37 +20,43 @@ const reinitializeNightRole = async (playerId, role, wasHealed) => {
         case 'cop':
             await Player.findByIdAndUpdate(playerId,{
                 $set: {'skills.investigate': false},
-            }) 
+            })
             break;
         
         case 'medic':
             await Player.findByIdAndUpdate(playerId,{
                 $set: {'skills.heal': false},
-            }) 
+            })
             break;
 
         case 'vagabond':
             await Player.findByIdAndUpdate(playerId,{
                 $set: {'skills.beg': false},
-            }) 
+            })
             break;
 
         case 'leaderMafia':
             await Player.findByIdAndUpdate(playerId,{
                 $set: {'skills.shoot': false},
-            }) 
+            })
             break;
 
         case 'assassinMafia':
             await Player.findByIdAndUpdate(playerId,{
                 $set: {'skills.shoot': false},
-            }) 
+            })
             break;
 
         case 'thiefMafia':
             await Player.findByIdAndUpdate(playerId,{
                 $set: {'skills.shoot': false},
-            }) 
+            })
+            break;
+
+        case 'apprenticeMafia':
+            await Player.findByIdAndUpdate(playerId,{
+                $set: {'skills.shoot': false},
+            })
             break;
 
         default:

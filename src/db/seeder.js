@@ -25,6 +25,24 @@ var data = [
         'model': 'Role',
         'documents': [
             {
+                "role": "apprenticeMafia",
+                "skills": {
+                    "vote": false,
+                    "shoot": false
+                },
+                "displaySkills": {
+                    "day": ["Votar"],
+                    "night": ["Disparar"]
+                },
+                "description": "Aliado con los Mafias. Puedes dispararle a un jugador todas las noches.",
+                "display": "Mafia Aprendiz",
+                "log": [
+                    {"global": false, "event": "You are the Apprentice Mafia"},
+                    {"global": false, "event": "It's night-time"},
+                ],
+                "sided": "mafia"
+            },
+            {
                 "role": "assassinMafia",
                 "skills": {
                     "vote": false,

@@ -12,6 +12,7 @@ const rolesMap = {
     leaderMafia: 'mafia',
     assassinMafia: 'mafia',
     thiefMafia: 'mafia',
+    apprenticeMafia: 'mafia'
 }
 
 router.post('/', auth, async (req, res) => {
