@@ -36,7 +36,7 @@ const roundHandler = async (partyId) => {
             // Update Sockets
             await globalAnnouncement(partyId, 'Todos los civiles fueron eliminados. Ganaron los Mafias!')
             await sendUpdatedPlayers(partyId)
-            return await updateParty(partyId, {won: 'mafias', status: 'finished'})
+            return await updateParty(partyId, {won: 'mafia', status: 'finished'})
             
         }
         if (updatedParty.liveMafias === 0) {
@@ -58,6 +58,7 @@ const roundHandler = async (partyId) => {
             {$set: {
                 changingRound: false,
                 instance: newInstance,
+                didMafiaShoot: false,
                 endRoundDate: Date.now() + roundDurationMS
             },
             $inc: {round: 1}})

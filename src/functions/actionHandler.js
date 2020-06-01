@@ -1,6 +1,7 @@
 const { Player } = require('../models/player')
+const { Party } = require('../models/party')
 const { roundHandler } = require('./roundHandler')
-const { sendUpdatedPlayers, privateLog } = require('./utils')
+const { sendUpdatedPlayers, updateParty, privateLog } = require('./utils')
 
 const actionHandler = async ({partyId, playerId, targetId, action}) => {
     
@@ -29,22 +30,27 @@ const actionHandler = async ({partyId, playerId, targetId, action}) => {
                 break;
 
             case 'shoot':
-                let isDone = true
+                const party = await Party.findById(partyId)
+                if (!party.didMafiaShoot) {
+                    
+                    await updateParty(partyId, {didMafiaShoot: true})
+                    let isDone = true
+
+                    if (player.role === 'assassinMafia') {
+                        isDone = player.skills.get('specialShot')
+                    } else if (player.role === 'thiefMafia') {
+                        isDone = player.skills.get('steal')
+                    }
     
-                if (player.role === 'assassinMafia') {
-                    isDone = player.skills.get('specialShot')
-                } else if (player.role === 'thiefMafia') {
-                    isDone = player.skills.get('steal')
+                    await Player.findByIdAndUpdate(targetId,{
+                        $set: { wasShot: true }
+                    })
+    
+                    await Player.findByIdAndUpdate(playerId,{
+                        $set: {'skills.shoot': true, isDone},
+                        $push: {log: privateLog(`Le has disparado a ${target.playerName}.`)}
+                    })
                 }
-
-                await Player.findByIdAndUpdate(targetId,{
-                    $set: { wasShot: true }
-                })
-
-                await Player.findByIdAndUpdate(playerId,{
-                    $set: {'skills.shoot': true, isDone},
-                    $push: {log: privateLog(`Le has disparado a ${target.playerName}.`)}
-                })
                 break;
 
             case 'cutTongue':

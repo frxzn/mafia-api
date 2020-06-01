@@ -62,10 +62,20 @@ const partySchema = new mongoose.Schema({
         type: Number,
         default: null
     },
+    didMafiaShoot: {
+        type: Boolean,
+        default: false
+    }
 })
 
 partySchema.pre('save', async function() {
-    this.roles = await Role.find().where('role').in(this.availableRoles).exec();
+    const roles = []
+    for (let i = 0; i < this.availableRoles.length; i++) {
+        const role = this.availableRoles[i];
+        const res = await Role.find().where('role', role)
+        roles.push(res[0])
+    }
+    this.roles = roles
 })
 
 const Party = mongoose.model('Party', partySchema)
