@@ -1,5 +1,6 @@
 const express = require('express')
 const { Party, Message } = require('../models/party')
+const { Chat } = require('../models/chat')
 const auth = require('../middleware/auth')
 
 const router = express.Router()
@@ -30,6 +31,8 @@ router.post('/', auth, async (req, res) => {
         })
 
         const party = await Party.create({...req.body, liveCivilians, liveMafias, numberOfPlayers ,createdBy: req.user._id})
+        const partyId = party._id
+        await Chat.create({partyId})
         res.status(201).send(party)
     } catch (e) {
         res.status(400).send(e)

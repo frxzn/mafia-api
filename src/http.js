@@ -8,7 +8,7 @@ const partiesRouter = require('./routes/parties')
 const playersRouter = require('./routes/players')
 const eventsRouter = require('./routes/events')
 const rolesRouter = require('./routes/roles')
-const { Party } = require('./models/party')
+const chatsRouter = require('./routes/chats')
 
 require('./db/mongoose')
 
@@ -25,13 +25,13 @@ app.use('/api/parties', partiesRouter)
 app.use('/api/players', playersRouter)
 app.use('/api/events', eventsRouter)
 app.use('/api/roles', rolesRouter)
+app.use('/api/chats', chatsRouter)
 
 io.on('connection', (socket) => {
   console.log('a user connected', socket.id);
   socket.on('join', (partyId) => {
     console.log('Joining room ' + partyId)
     socket.join(partyId)
-    // Handle chat messages:
     socket.on('err', (id) => {
       console.log('Leaving room ' + id)
       socket.leave(id)
