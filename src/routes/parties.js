@@ -1,5 +1,5 @@
 const express = require('express')
-const { Party } = require('../models/party')
+const { Party, Message } = require('../models/party')
 const auth = require('../middleware/auth')
 
 const router = express.Router()
@@ -17,7 +17,6 @@ const rolesMap = {
 
 router.post('/', auth, async (req, res) => {
     try {
-
         let liveCivilians = 0
         let liveMafias = 0
         let numberOfPlayers = req.body.availableRoles.length
@@ -59,6 +58,21 @@ router.get('/:partyId', async (req, res) => {
     try {
         const party = await Party.findById(req.params.partyId)
         res.send(party)
+    } catch (e) {
+        console.log(e)
+        res.status(400).send(e)
+    }
+})
+
+// Post Messages
+router.post('/:partyId/chat', auth, async (req, res) => {
+    const partyId = req.params.partyId
+    const message = new Message(req.body)
+    try {
+        await Party.findByIdAndUpdate(partyId, {
+            $addToSet: {chat: message}
+        })
+        res.send(message)
     } catch (e) {
         console.log(e)
         res.status(400).send(e)

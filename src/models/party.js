@@ -2,9 +2,9 @@ const mongoose = require('mongoose')
 const { Role, roleSchema } = require('./role')
 
 const messageSchema = new mongoose.Schema({
-    senderName: String,
-    message: String,
-    timestamp: Date
+    senderId: String,
+    content: String,
+    time: Number
 })
 
 const partySchema = new mongoose.Schema({
@@ -56,7 +56,7 @@ const partySchema = new mongoose.Schema({
     },
     roundDuration: {
         type: Number,
-        default: 5
+        default: 0.5
     },
     endRoundDate: {
         type: Number,
@@ -79,5 +79,6 @@ partySchema.pre('save', async function() {
 })
 
 const Party = mongoose.model('Party', partySchema)
+const Message = mongoose.model('Message', messageSchema)
 
-module.exports = { Party }
+module.exports = { Party, Message }

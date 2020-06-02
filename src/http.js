@@ -34,14 +34,6 @@ io.on('connection', (socket) => {
     // Handle chat messages:
     socket.on('message', (messageObject) => {
       io.to(partyId).emit('message', messageObject)
-      // Save message to party/messages arr
-      Party.findByIdAndUpdate(partyId, {
-        $addToSet: {chat: messageObject}
-      }, (err, res) => {
-        if (err) {
-          console.log(err)
-        }
-      })
     })
     socket.on('err', (id) => {
       console.log('Leaving room ' + id)
