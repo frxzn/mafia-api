@@ -32,13 +32,14 @@ io.on('connection', (socket) => {
     console.log('Joining room ' + partyId)
     socket.join(partyId)
     // Handle chat messages:
-    socket.on('message', (messageObject) => {
-      io.to(partyId).emit('message', messageObject)
-    })
     socket.on('err', (id) => {
       console.log('Leaving room ' + id)
       socket.leave(id)
     })
+  })
+  socket.on('message', (payload) => {
+    console.log(payload)
+    socket.to(payload.partyId).emit('message', payload.messageObject)
   })
 })
 
