@@ -37,9 +37,11 @@ io.on('connection', (socket) => {
       socket.leave(id)
     })
   })
-  socket.on('message', (payload) => {
-    console.log(payload)
-    socket.to(payload.partyId).emit('message', payload.messageObject)
+  socket.on('globalMessage', (payload) => {
+    socket.to(payload.partyId).emit('globalMessage', payload.messageObject)
+  })
+  socket.on('mafiaMessage', (payload) => {
+    socket.to(payload.partyId).emit('mafiaMessage', payload.messageObject)
   })
 })
 
