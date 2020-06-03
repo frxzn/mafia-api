@@ -58,6 +58,10 @@ const partySchema = new mongoose.Schema({
     didMafiaShoot: {
         type: Boolean,
         default: false
+    },
+    endgame: {
+        type: Number,
+        default: 0
     }
 })
 

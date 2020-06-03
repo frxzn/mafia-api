@@ -36,14 +36,21 @@ const roundHandler = async (partyId) => {
             // Update Sockets
             await globalAnnouncement(partyId, 'Todos los civiles fueron eliminados. Ganaron los Mafias!')
             await sendUpdatedPlayers(partyId)
-            return await updateParty(partyId, {won: 'mafia', status: 'finished'})
+            return await updateParty(partyId, {won: 'mafia', status: 'finished', endgame: Date.now()})
             
         }
         if (updatedParty.liveMafias === 0) {
             // Update Sockets
             await globalAnnouncement(partyId, 'Todos los mafias fueron eliminados. Ganaron los Civiles!')
             await sendUpdatedPlayers(partyId)
-            return await updateParty(partyId, {won: 'civilians', status: 'finished'})
+            return await updateParty(partyId, {won: 'civilians', status: 'finished', endgame: Date.now()})
+            
+        }
+        if (updatedParty.round > 40) {
+            // Update Sockets
+            await globalAnnouncement(partyId, 'Game Ended. No one won.')
+            await sendUpdatedPlayers(partyId)
+            return await updateParty(partyId, {won: 'tie', status: 'finished', endgame: Date.now()})
             
         }
         

@@ -57,9 +57,13 @@ router.get('/me', auth, async (req, res) => {
     }
 })
 
-router.get('/:partyId', async (req, res) => {
+router.get('/:partyId', auth, async (req, res) => {
     try {
         const party = await Party.findById(req.params.partyId)
+        const userId = req.user._id
+        if (!party.usersId.includes(userId)) {
+            throw new Error('You do not belong here')
+        }
         res.send(party)
     } catch (e) {
         console.log(e)
