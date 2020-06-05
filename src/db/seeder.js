@@ -31,14 +31,13 @@ var data = [
                     "shoot": false
                 },
                 "displaySkills": {
-                    "day": ["Votar"],
-                    "night": ["Disparar"]
+                    "day": ["Vote"],
+                    "night": ["Shoot"]
                 },
-                "description": "Aliado con los Mafias. Puedes dispararle a un jugador todas las noches.",
-                "display": "Mafia Aprendiz",
+                "description": "Allied with the mafia. Can shoot a player every night only if there's no other ally alive with a higher rank.",
+                "display": "Apprentice",
                 "log": [
-                    {"global": false, "event": "You are the Apprentice Mafia"},
-                    {"global": false, "event": "It's night-time"},
+                    {"global": false, "event": "Your role is Apprentice Mafia. It's night-time."},
                 ],
                 "sided": "mafia"
             },
@@ -50,14 +49,13 @@ var data = [
                     "specialShot": false
                 },
                 "displaySkills": {
-                    "day": ["Votar"],
-                    "night": ["Disparar", "Tiro Especial"]
+                    "day": ["Vote"],
+                    "night": ["Shoot", "Special Shot"]
                 },
-                "description": "Aliado con los Mafias. Puedes disparar a un jugador todas las noches, siempre y cuando el Mafia Lider haya sido eliminado. Ademas, tienes un tiro adicional una vez por partida!",
-                "display": "Mafia Asesino",
+                "description": "Allied with the mafia. Can shoot a player every night, only when the Leader has been eliminated. Furthermore, you have an additional shot per game.",
+                "display": "Assassin",
                 "log": [
-                    {"global": false, "event": "You are the Assassin Mafia"},
-                    {"global": false, "event": "It's night-time"},
+                    {"global": false, "event": "Your role is Assassin Mafia. It's night-time."},
                 ],
                 "sided": "mafia"
             },
@@ -69,14 +67,13 @@ var data = [
                     "cutArm": false
                 },
                 "displaySkills": {
-                    "day": ["Votar"],
-                    "night": ["Cortar Lengua", "Cortar Mano"]
+                    "day": ["Vote"],
+                    "night": ["Cut Tongue", "Cut Hand"]
                 },
-                "description": "Aliado con los Civiles. Una vez por partida, puedes cortarle la lengua y/o la mano a un jugador, evitando que pueda hablar y/o votar, respectivamente, durante el dia.",
-                "display": "Carnicero",
+                "description": "Allied with the village. Once per game, you can cut a players hand and/or tongue, preventing the victim from voting and/or chatting for the entire game.",
+                "display": "Butcher",
                 "log": [
-                    {"global": false, "event": "You are the Butcher"},
-                    {"global": false, "event": "It's night-time"},
+                    {"global": false, "event": "Your role is Butcher. It's night-time."},
                 ],
                 "sided": "civilians"
             },
@@ -87,14 +84,13 @@ var data = [
                     "investigate": false
                 },
                 "displaySkills": {
-                    "day": ["Votar"],
-                    "night": ["Investigar"]
+                    "day": ["Vote"],
+                    "night": ["Investigate"]
                 },
-                "description": "Aliado con los Civiles. Puedes investigar un jugador todas las noches y averiguar su bando!",
-                "display": "Policia",
+                "description": "Allied with the village. Can investigate a player every night and find out who's he sided with.",
+                "display": "Cop",
                 "log": [
-                    {"global": false, "event": "You are the Cop"},
-                    {"global": false, "event": "It's night-time"},
+                    {"global": false, "event": "Your role is Cop. It's night-time."},
                 ],
                 "sided": "civilians"
             },
@@ -105,14 +101,13 @@ var data = [
                     "shoot": false
                 },
                 "displaySkills": {
-                    "day": ["Votar"],
-                    "night": ["Disparar"]
+                    "day": ["Vote"],
+                    "night": ["Shoot"]
                 },
-                "description": "Aliado con los Mafias. Puedes dispararle a un jugador todas las noches.",
-                "display": "Mafia Lider",
+                "description": "Allied with the mafia. Can shoot a player every night.",
+                "display": "Leader",
                 "log": [
-                    {"global": false, "event": "You are the Leader Mafia"},
-                    {"global": false, "event": "It's night-time"},
+                    {"global": false, "event": "Your role is Leader Mafia. It's night-time."},
                 ],
                 "sided": "mafia"
             },
@@ -123,14 +118,13 @@ var data = [
                     "heal": false
                 },
                 "displaySkills": {
-                    "day": ["Votar"],
-                    "night": ["Curar"]
+                    "day": ["Vote"],
+                    "night": ["Heal"]
                 },
-                "description": "Aliado con los Civiles. Puedes curar un jugador todas las noches, el cual no se vera afectado por el disparo de los mafias, ni las habilidades del carnicero.",
-                "display": "Medico",
+                "description": "Allied with the village. Can heal a player every night, which will be saved from the Mafia's shot and the Butcher's skills.",
+                "display": "Medic",
                 "log": [
-                    {"global": false, "event": "You are the Medic"},
-                    {"global": false, "event": "It's night-time"},
+                    {"global": false, "event": "Your role is Medic. It's night-time."},
                 ],
                 "sided": "civilians"
             },
@@ -142,14 +136,13 @@ var data = [
                     "steal": false
                 },
                 "displaySkills": {
-                    "day": ["Votar"],
-                    "night": ["Disparar", "Robar"]
+                    "day": ["Vote"],
+                    "night": ["Shoot", "Steal"]
                 },
-                "description": "Aliado con los Mafias. Puedes disparar un jugador todas las noches, siempre y cuando el Mafia Lider y Mafia Asesino hayan sido eliminados. Ademas, puedes averiguar el rol de un jugador una vez por partida!",
-                "display": "Mafia Ladron",
+                "description": "Allied with the mafia. Can shoot a player every night, only when the Leader and Assassin have been eliminated. Furthermore, you can inquire a players role once per game.",
+                "display": "Thief",
                 "log": [
-                    {"global": false, "event": "You are the Thief Mafia"},
-                    {"global": false, "event": "It's night-time"},
+                    {"global": false, "event": "Your role is Thief Mafia. It's night-time."},
                 ],
                 "sided": "mafia"
             },
@@ -160,14 +153,13 @@ var data = [
                     "beg": false
                 },
                 "displaySkills": {
-                    "day": ["Votar"],
-                    "night": ["Mendigar"]
+                    "day": ["Vote"],
+                    "night": ["Beg"]
                 },
-                "description": "Aliado con los Civiles. Solo puedes mendigar.",
+                "description": "Allied with the village. Can beg for money.",
                 "display": "Mendigo",
                 "log": [
-                    {"global": false, "event": "You are the Vagabond"},
-                    {"global": false, "event": "It's night-time"},
+                    {"global": false, "event": "Your role is Vagabond. It's night-time."},
                 ],
                 "sided": "civilians"
             }
