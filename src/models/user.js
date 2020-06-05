@@ -32,13 +32,15 @@ const userSchema = new mongoose.Schema({
             type: String,
             required: true
         }
-    }]
+    }],
+    avatar: Buffer
 })
 
 userSchema.methods.toJSON = function() {
     const userObject = this.toObject()
     delete userObject.password
     delete userObject.tokens
+    delete userObject.avatar
     return userObject
 }
 

@@ -13,11 +13,12 @@ router.post('/:partyId', auth, join, async (req, res) => {
         const player = await Player.create({
             ...req.role,
             playerName: req.user.name,
+            playerAvatar: req.user.avatar,
             userId: req.user._id,
             partyId: req.params.partyId
         })
         await sendUpdatedPlayers(req.params.partyId)
-        const party = await Party.findByIdAndUpdate(req.params.partyId,
+        await Party.findByIdAndUpdate(req.params.partyId,
             {
                 $addToSet: {playersId: player._id, usersId: req.user._id}
                 

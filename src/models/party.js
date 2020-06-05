@@ -49,7 +49,7 @@ const partySchema = new mongoose.Schema({
     },
     roundDuration: {
         type: Number,
-        default: 0.5
+        default: 5
     },
     endRoundDate: {
         type: Number,

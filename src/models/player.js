@@ -46,6 +46,10 @@ const playerSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true,
     },
+    playerAvatar: {
+        type: String,
+        required: true
+    },
     ...roleSchemaProps
 })
 
