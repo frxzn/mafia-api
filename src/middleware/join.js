@@ -4,10 +4,10 @@ const join = async (req, res, next) => {
     try {
         const party = await Party.findById(req.params.partyId)
         if (party.status !== 'waiting') {
-            throw new Error('Game has already started')
+            throw new Error('Game has already started.')
         }
         if (party.usersId.includes(req.user._id)) {
-            throw new Error('You have already joined this room')
+            throw new Error('You have already joined this room.')
         }
         const doc = await Party.findByIdAndUpdate(req.params.partyId,
             {
@@ -16,7 +16,7 @@ const join = async (req, res, next) => {
         );
         const role = doc.roles[0]
         if (!role) {
-            throw new Error('All spots taken')
+            throw new Error('All spots taken.')
         }
         const cleanRole = role.toObject()
         delete cleanRole._id

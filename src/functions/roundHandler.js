@@ -34,14 +34,14 @@ const roundHandler = async (partyId) => {
 
         if (updatedParty.liveCivilians === 0) {
             // Update Sockets
-            await globalAnnouncement(partyId, 'Todos los civiles fueron eliminados. Ganaron los Mafias!')
+            await globalAnnouncement(partyId, 'All the Civilians have been eliminated. The Mafia Wins!')
             await sendUpdatedPlayers(partyId)
             return await updateParty(partyId, {won: 'mafia', status: 'finished', endgame: Date.now()})
             
         }
         if (updatedParty.liveMafias === 0) {
             // Update Sockets
-            await globalAnnouncement(partyId, 'Todos los mafias fueron eliminados. Ganaron los Civiles!')
+            await globalAnnouncement(partyId, 'The Mafia has been eliminated. The Civilians Won!')
             await sendUpdatedPlayers(partyId)
             return await updateParty(partyId, {won: 'civilians', status: 'finished', endgame: Date.now()})
             
@@ -55,10 +55,9 @@ const roundHandler = async (partyId) => {
         }
         
         const newInstance = updatedParty.instance === 'night' ? 'day' : 'night'
-        const newInstanceDisplay = updatedParty.instance === 'night' ? 'Dia' : 'Noche'
 
         // Update Sockets
-        await globalAnnouncement(partyId, `Se hizo de ${newInstanceDisplay}`)
+        await globalAnnouncement(partyId, `It's ${newInstance}-time.`)
         await sendUpdatedPlayers(partyId)
         const roundDurationMS = updatedParty.roundDuration * 60 * 1000 // roundDuration: minutes to miliseconds
         await updateParty(partyId,
