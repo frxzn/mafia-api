@@ -81,14 +81,14 @@ router.get('/:id/avatar', async (req, res) => {
         if (!user) {
             throw new Error()
         }
+        let response = user.avatar
         if (!user.avatar) {
             const avatarBuffer = fs.readFileSync(path.join(__dirname, '../avatar.png'))
             const avatar = Buffer.from(avatarBuffer, 'base64');
-            res.set('Content-type', 'image/png')
-            res.send(avatar)
+            response = avatar
         }
         res.set('Content-type', 'image/png')
-        res.send(user.avatar)
+        res.send(response)
 
     } catch (e) {
         res.status(404).send(e)
