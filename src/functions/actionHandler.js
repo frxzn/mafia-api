@@ -60,7 +60,7 @@ const actionHandler = async ({partyId, playerId, targetId, action}) => {
 
                 await Player.findByIdAndUpdate(playerId,{
                     $set: {'skills.cutTongue': true, isDone: player.skills.get('cutArm')},
-                    $push: {log: privateLog(`You have cut off "${target.playerName}" tongue.`)}
+                    $push: {log: privateLog(`You have cut off "${target.playerName}'s" tongue.`)}
                 })
                 break;
 
@@ -71,7 +71,7 @@ const actionHandler = async ({partyId, playerId, targetId, action}) => {
 
                 await Player.findByIdAndUpdate(playerId,{
                     $set: {'skills.cutArm': true, isDone: player.skills.get('cutTongue')},
-                    $push: {log: privateLog(`You have cut off "${target.playerName}" hand.`)}
+                    $push: {log: privateLog(`You have cut off "${target.playerName}'s" hand.`)}
                 })
                 break;
 

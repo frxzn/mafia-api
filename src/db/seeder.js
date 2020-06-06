@@ -70,7 +70,7 @@ var data = [
                     "day": ["Vote"],
                     "night": ["Cut Tongue", "Cut Hand"]
                 },
-                "description": "Allied with the village. Once per game, you can cut a players hand and/or tongue, preventing the victim from voting and/or chatting for the entire game.",
+                "description": "Allied with the village. Once per game, can cut a players hand and/or tongue, preventing the victim from voting and/or chatting for the entire game.",
                 "display": "Butcher",
                 "log": [
                     {"global": false, "event": "Your role is Butcher. It's night-time."},
@@ -121,7 +121,7 @@ var data = [
                     "day": ["Vote"],
                     "night": ["Heal"]
                 },
-                "description": "Allied with the village. Can heal a player every night, which will be saved from the Mafia's shot and the Butcher's skills.",
+                "description": "Allied with the village. Can heal a player every night, which will be saved from the Mafia's shot and the Butcher's knife.",
                 "display": "Medic",
                 "log": [
                     {"global": false, "event": "Your role is Medic. It's night-time."},
@@ -142,7 +142,7 @@ var data = [
                 "description": "Allied with the mafia. Can shoot a player every night, only when the Leader and Assassin have been eliminated. Furthermore, you can inquire a players role once per game.",
                 "display": "Thief",
                 "log": [
-                    {"global": false, "event": "Your role is Thief Mafia. It's night-time."},
+                    {"global": false, "event": "Your role is Thief. It's night-time."},
                 ],
                 "sided": "mafia"
             },

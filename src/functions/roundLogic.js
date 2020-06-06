@@ -13,19 +13,19 @@ const roundLogic = async (playerId, partyId, lynchedPlayerId) => {
             if (!player.wasShot) {
                 if (player.wasArmCutOff) {
                     // Player was not healed and arm was cut off
-                    if (!player.log.filter(currLog => currLog.event.includes('hand has been cut off')).length) {
-                        // Check that is wasnt announced before
-                        await globalAnnouncement(partyId, `"${player.playerName}'s" hand has been cut off.`)
-                    }
+                    await Player.findByIdAndUpdate(playerId, {
+                        $set: {noHand: true}
+                    })
+                    await globalAnnouncement(partyId, `"${player.playerName}'s" hand has been cut off.`)
                 }
                 if (player.wasTongueCutOff) {
                     // Player was not healed and tongue was cut off
-                    if (!player.log.filter(currLog => currLog.event.includes('tongue has been cut off')).length) {
-                        // Check that is wasnt announced before
-                        await globalAnnouncement(partyId, `"${player.playerName}'s" tongue has been cut off.`)
-                    }
+                    await Player.findByIdAndUpdate(playerId, {
+                        $set: {noTongue: true}
+                    })
+                    await globalAnnouncement(partyId, `"${player.playerName}'s" tongue has been cut off.`)
                 }
-                return await reinitializeNightRole(playerId, player.role, player.wasHealed)
+                return await reinitializeNightRole(playerId, player.role)
             } else if (player.wasShot) {
                 // Player was not healed and was shot = dies
                 await killPlayer(playerId, partyId, player.sided)
@@ -33,7 +33,7 @@ const roundLogic = async (playerId, partyId, lynchedPlayerId) => {
             }
         } else if (player.wasHealed) {
             // Player was healed = cures everything
-            return await reinitializeNightRole(playerId, player.role, player.wasHealed)          
+            return await reinitializeNightRole(playerId, player.role)          
         }
     } else if (party.instance === 'day') {
         if (lynchedPlayerId === playerId) {

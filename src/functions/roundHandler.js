@@ -51,7 +51,6 @@ const roundHandler = async (partyId) => {
             await globalAnnouncement(partyId, 'Game Ended. No one won.')
             await sendUpdatedPlayers(partyId)
             return await updateParty(partyId, {won: 'tie', status: 'finished', endgame: Date.now()})
-            
         }
         
         const newInstance = updatedParty.instance === 'night' ? 'day' : 'night'
@@ -60,8 +59,8 @@ const roundHandler = async (partyId) => {
         await globalAnnouncement(partyId, `It's ${newInstance}-time.`)
         await sendUpdatedPlayers(partyId)
         const roundDurationMS = updatedParty.roundDuration * 60 * 1000 // roundDuration: minutes to miliseconds
-        await updateParty(partyId,
-            {$set: {
+        await updateParty(partyId, {
+            $set: {
                 changingRound: false,
                 instance: newInstance,
                 didMafiaShoot: false,

@@ -18,6 +18,10 @@ const playerSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    noHand: {
+        type: Boolean,
+        default: false
+    },
     wasHealed: {
         type: Boolean,
         default: false
@@ -31,6 +35,10 @@ const playerSchema = new mongoose.Schema({
         default: false
     },
     wasTongueCutOff: {
+        type: Boolean,
+        default: false
+    },
+    noTongue: {
         type: Boolean,
         default: false
     },
